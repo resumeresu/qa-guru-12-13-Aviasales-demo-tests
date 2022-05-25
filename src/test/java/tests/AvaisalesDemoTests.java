@@ -17,7 +17,7 @@ public class AvaisalesDemoTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Check main page switched to tickets search by default")
+    @DisplayName("Main page switched to tickets search by default")
     void checkSwitchedToTicketsSearch() {
         mainPage.checkSwitchedToTicketsSearch();
     }
@@ -53,14 +53,14 @@ public class AvaisalesDemoTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Check tabs appear in header as user scrolls down")
+    @DisplayName("Tabs appear in header as user scrolls down")
     void checkTabsAppear() {
         mainPage.scrollDownToPromoTitle()
                 .checkTabsAppear();
     }
 
-    @ParameterizedTest(name = "Search when no flights to the destination for the given dates")
     @ValueSource(strings = {"Токи", "Ваши", "Пеки"})
+    @ParameterizedTest(name = "Search when no flights to the destination for the given dates")
     void searchWhenNoFlightsToDestination(String destination) {
         mainPage.setDestinationAutocomplete(destination)
                 .selectDepartureDate()
