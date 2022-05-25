@@ -2,7 +2,7 @@ package tests;
 
 import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.logevents.SelenideLogger;
-import config.CredentialsConfig;
+import config.RemoteCredentialsConfig;
 import helpers.Attachmets;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.aeonbits.owner.ConfigFactory;
@@ -16,7 +16,7 @@ public class BaseTest {
 
     @BeforeAll
     static void setUp() {
-        CredentialsConfig config = ConfigFactory.create(CredentialsConfig.class);
+        RemoteCredentialsConfig config = ConfigFactory.create(RemoteCredentialsConfig.class);
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
 
         String login = config.login();

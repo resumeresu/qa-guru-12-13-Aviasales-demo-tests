@@ -1,21 +1,23 @@
 package tests;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import steps.MainPage;
 
-import java.util.Locale;
-
 public class AvaisalesDemoTests extends BaseTest {
 
-    Faker faker = new Faker(new Locale("ru-RU"));
     MainPage mainPage = new MainPage();
 
     @BeforeEach
     void openMainPage() {
         mainPage.open();
+    }
+
+    @Test
+    @DisplayName("Check main page switched to tickets search by default")
+    void checkSwitchedToTicketsSearch() {
+        mainPage.checkSwitchedToTicketsSearch();
     }
 
     @Test
@@ -49,17 +51,10 @@ public class AvaisalesDemoTests extends BaseTest {
     }
 
     @Test
-    @DisplayName("Search for nearest tickers for an inland flight")
-    void searchFirstAvailableTickets() {
-        String origin = "Санкт-";
-        String destination = "Мос";
-        mainPage.setOriginAutocomplete(origin)
-                .setDestinationAutocomplete(destination)
-                .selectDepartureDate()
-                .selectReturnDate()
-                .uncheckHotelSearch()
-                .runSearch()
-                .checkSearchStarted(origin, destination);
+    @DisplayName("Check tabs appear in header as user scrolls down")
+    void checkTabsAppear() {
+        mainPage.scrollDownToPromoTitle()
+                .checkTabsAppear();
     }
 
 }

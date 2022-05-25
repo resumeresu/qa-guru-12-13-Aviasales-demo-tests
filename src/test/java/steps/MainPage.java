@@ -2,20 +2,17 @@ package steps;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$$;
 
 public class MainPage {
 
     @Step("Open the main page")
-    public MainPage open() {
+    public void open() {
         Selenide.open("/");
-        return this;
     }
 
     @Step("Click services menu")
@@ -55,71 +52,34 @@ public class MainPage {
     }
 
     @Step("Click subscription info header button")
-    public MainPage clickSubscriptionHeaderButton () {
+    public MainPage clickSubscriptionHeaderButton() {
         $(byAttribute("data-test-id", "add-something-more-button")).click();
         return this;
     }
 
-    @Step("Вводим пункт отправления")
-    public MainPage setOriginAutocomplete(String origin) {
-        $("#destination").shouldBe(focused);
-        $("#origin").click();
-        $("#origin").sendKeys(Keys.BACK_SPACE);
-        $("#origin").sendKeys(Keys.BACK_SPACE);
-        $("#origin").sendKeys(Keys.BACK_SPACE);
-        $("#origin").setValue(origin);
-        $("#origin-item-0").click();
-        return this;
-    }
-
-    @Step("Вводим пункт назначения")
-    public MainPage setDestinationAutocomplete(String destination) {
-        $("#destination").setValue(destination);
-        $("#destination-item-0").click();
-        return this;
-    }
-
-    @Step("Выбираем первую доступную дату отправления")
-    public MainPage selectDepartureDate() {
-        $(".--departure").click();
-        $$(".calendar__day-cell")
-                .filterBy(attribute("aria-disabled","false"))
-                .findBy(not(cssClass("visuallyDisabled")))
-                .click();
-        return this;
-    }
-
-    @Step("Выбираем дату возвращения")
-    public MainPage selectReturnDate() {
-        $$(".calendar__day-cell")
-                .filterBy(attribute("aria-disabled","false"))
-                .findBy(not(cssClass("visuallyDisabled")))
-                .click();
-        return this;
-    }
-
     @Step("Check hotel search enabled")
-    public MainPage checkHotelSearchEnabled() {
+    public void checkHotelSearchEnabled() {
         $("#clicktripz").shouldBe(checked);
+    }
+
+    @Step("Check switched to tickets search")
+    public void checkSwitchedToTicketsSearch() {
+        $(".header__title").shouldHave(text("Поиск дешёвых авиабилетов"));
+        $(".header__title-form").shouldHave(text("Лучший способ купить авиабилеты дёшево"));
+        $(".form-tabs__item.--avia").shouldHave(cssClass("is-active"));
+        $("#origin-label").shouldHave(text("Откуда"));
+        $(".form-submit__label").shouldHave(text("Найти билеты"));
+    }
+
+    @Step("Scroll down to promo title")
+    public MainPage scrollDownToPromoTitle() {
+        $(".services-promo__title").scrollIntoView(true);
         return this;
     }
 
-    @Step("Uncheck hotel search")
-    public MainPage uncheckHotelSearch() {
-        $(byAttribute("data-test-id", "checkbox-booking")).click();
-        return this;
-    }
-
-    @Step("Run tickets search")
-    public MainPage runSearch() {
-        $(".avia-form__submit").click();
-        return this;
-    }
-
-    @Step("Check search has been started")
-    public void checkSearchStarted(String origin, String destination) {
-        //$(".serp-modal__title").shouldHave(text(origin + "—" + destination));
-        $(".search-countdown__title").shouldHave(text("Ищём авиабилеты..."));
+    @Step("Check tabs appear in header as user scrolls down")
+    public void checkTabsAppear() {
+        $(".form-tabs.--show-on-sticky").shouldBe(visible);
     }
 
 }
