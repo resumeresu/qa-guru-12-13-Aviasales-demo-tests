@@ -122,10 +122,9 @@ public class MainPage {
         return this;
     }
 
-    @Step("Check search has been started")
-    public void checkSearchStarted(String origin, String destination) {
-        //$(".serp-modal__title").shouldHave(text(origin + "—" + destination));
-        $(".search-countdown__title").shouldHave(text("Ищём авиабилеты..."));
+    @Step("Check search returned no results")
+    public void checkSearchReturnNoResults() {
+        $(".error-informer__container").shouldHave(text("Билеты не найдены"));
     }
 
 }

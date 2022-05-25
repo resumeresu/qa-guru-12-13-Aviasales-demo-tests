@@ -3,6 +3,8 @@ package tests;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import steps.MainPage;
 
 public class AvaisalesDemoTests extends BaseTest {
@@ -55,6 +57,17 @@ public class AvaisalesDemoTests extends BaseTest {
     void checkTabsAppear() {
         mainPage.scrollDownToPromoTitle()
                 .checkTabsAppear();
+    }
+
+    @ParameterizedTest(name = "Search when no flights to the destination for the given dates")
+    @ValueSource(strings = {"Токи", "Ваши", "Пеки"})
+    void searchWhenNoFlightsToDestination(String destination) {
+        mainPage.setDestinationAutocomplete(destination)
+                .selectDepartureDate()
+                .selectReturnDate()
+                .uncheckHotelSearch()
+                .runSearch()
+                .checkSearchReturnNoResults();
     }
 
 }

@@ -27,7 +27,6 @@ public class BaseTest {
         Configuration.baseUrl = "https://www.aviasales.ru";
         Configuration.browserSize = browserSize;
         //Configuration.remote = "https://" + login + ":" + password + "@" + remote;
-        Configuration.holdBrowserOpen = true;
 
         DesiredCapabilities capabilities = new DesiredCapabilities();
         capabilities.setCapability("enableVNC", true);
