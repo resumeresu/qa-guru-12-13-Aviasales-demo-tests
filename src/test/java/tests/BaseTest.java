@@ -24,7 +24,7 @@ public class BaseTest {
         String remote = System.getProperty("remote", "selenoid.autotests.cloud/wd/hub");
         String browserSize = System.getProperty("browserSize", "1920x1080");
 
-        Configuration.baseUrl = "https://www.aviasales.kz";
+        Configuration.baseUrl = "https://www.aviasales.ru";
         Configuration.browserSize = browserSize;
         Configuration.remote = "https://" + login + ":" + password + "@" + remote;
 
