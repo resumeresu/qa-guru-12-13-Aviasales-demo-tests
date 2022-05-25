@@ -2,11 +2,13 @@ package steps;
 
 import com.codeborne.selenide.Selenide;
 import io.qameta.allure.Step;
+import org.openqa.selenium.Keys;
 
 import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.byAttribute;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.$$;
 
 public class MainPage {
 
@@ -80,6 +82,50 @@ public class MainPage {
     @Step("Check tabs appear in header as user scrolls down")
     public void checkTabsAppear() {
         $(".form-tabs.--show-on-sticky").shouldBe(visible);
+    }
+
+    @Step("Set destination")
+    public MainPage setDestinationAutocomplete(String destination) {
+        $("#destination").setValue(destination);
+        $("#destination-item-0").click();
+        return this;
+    }
+
+    @Step("Select first available departure date")
+    public MainPage selectDepartureDate() {
+        $(".--departure").click();
+        $$(".calendar__day-cell")
+                .filterBy(attribute("aria-disabled","false"))
+                .findBy(not(cssClass("visuallyDisabled")))
+                .click();
+        return this;
+    }
+
+    @Step("Select first available return date")
+    public MainPage selectReturnDate() {
+        $$(".calendar__day-cell")
+                .filterBy(attribute("aria-disabled","false"))
+                .findBy(not(cssClass("visuallyDisabled")))
+                .click();
+        return this;
+    }
+
+    @Step("Uncheck hotel search")
+    public MainPage uncheckHotelSearch() {
+        $(byAttribute("data-test-id", "checkbox-booking")).click();
+        return this;
+    }
+
+    @Step("Run tickets search")
+    public MainPage runSearch() {
+        $(".avia-form__submit").click();
+        return this;
+    }
+
+    @Step("Check search has been started")
+    public void checkSearchStarted(String origin, String destination) {
+        //$(".serp-modal__title").shouldHave(text(origin + "—" + destination));
+        $(".search-countdown__title").shouldHave(text("Ищём авиабилеты..."));
     }
 
 }
